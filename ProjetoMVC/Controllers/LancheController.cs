@@ -16,7 +16,16 @@ namespace ProjetoMVC.Controllers
 
         public IActionResult List()
         {
+
+            ViewData["Titulo"] = "Todos os Lanches";
+            ViewData["Data"] = DateTime.Now;
+            
             var lanches = _lancheRepository.Lanches;
+            var totalLanches = lanches.Count();
+
+            ViewBag.TotalLanches = "Total de Lanches: ";
+            ViewBag.TotalLanches =  totalLanches;
+
             return View(lanches);
         }
     }
