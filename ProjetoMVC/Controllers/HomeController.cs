@@ -9,6 +9,8 @@ namespace ProjetoMVC.Controllers
 
         public IActionResult Index()
         {
+            TempData["Nome"] = "Marcos";
+
             return View();
         }
 

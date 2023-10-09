@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoMVC.Repositories;
 using ProjetoMVC.Repositories.Interfaces;
+using ProjetoMVC.ViewModel;
 
 namespace ProjetoMVC.Controllers
 {
@@ -17,16 +18,15 @@ namespace ProjetoMVC.Controllers
         public IActionResult List()
         {
 
-            ViewData["Titulo"] = "Todos os Lanches";
-            ViewData["Data"] = DateTime.Now;
+          //var lanches = _lancheRepository.Lanches;
+          // return View(lanches);
+          var lanchesListViewModel = new LancheListViewModel();
+            lanchesListViewModel.Lanches = _lancheRepository.Lanches;
+            lanchesListViewModel.CategoriaAtual = "Categoria Atual";
             
-            var lanches = _lancheRepository.Lanches;
-            var totalLanches = lanches.Count();
+            return View(lanchesListViewModel);
 
-            ViewBag.TotalLanches = "Total de Lanches: ";
-            ViewBag.TotalLanches =  totalLanches;
 
-            return View(lanches);
         }
     }
 }
