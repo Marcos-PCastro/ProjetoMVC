@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjetoMVC.Context;
+using ProjetoMVC.Models;
 using ProjetoMVC.Repositories;
 using ProjetoMVC.Repositories.Interfaces;
 
@@ -14,17 +15,18 @@ public class Startup
 
     public IConfiguration Configuration { get; }
 
-    
+
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
-
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        
+
+        services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
+
         services.AddControllersWithViews();
-        
+
         services.AddMemoryCache();
         services.AddSession();
     }
@@ -46,7 +48,7 @@ public class Startup
         app.UseStaticFiles();
 
         app.UseRouting();
-        
+
         app.UseSession();
 
         app.UseAuthorization();
